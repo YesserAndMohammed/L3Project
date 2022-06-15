@@ -31,13 +31,13 @@ def clean(s):
 
 def getPrediction(s):
     encode = clean(s)
-    print(encode)
+    #print(encode)
     encode = encode.split()
-    print(encode)
+    #print(encode)
     encode = review_encode(encode)
-    print(encode)
+    #print(encode)
     encode = keras.preprocessing.sequence.pad_sequences([encode], value=word_index["<PAD>"], padding="post", maxlen=250)
-    print(encode)
+    #print(encode)
     predict = model.predict(encode)
     #print(type(predict[0][0]))
     return predict[0][0]
@@ -62,7 +62,6 @@ def dashboard(request):
             else :
                 post.approved = False
                 post.save()
-                print(post.pk)
                 return redirect("Mymedia:suspe")
             
              
@@ -130,7 +129,6 @@ def Myprofile(request, pk):
         else :
                 post.approved = False
                 post.save()
-                print(post.pk)
                 return redirect("Mymedia:suspe")            
 
     return render(request, "Mymedia/Myprofile.html", {"profile": profile , "form": form})
