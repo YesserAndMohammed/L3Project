@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="column">
+            <div class="box" style="background-color: red;">
+                <span class="is-small has-text-grey-light">
+                    <p style="color: white;"><b>WARNING!</b><br/>
+                    Our System has detected racist or hate expressions in your post<br/>
+                    Such behavior are not tolerated in our Network </p>
+                    <div style="z-index: 9; margin: 20px; text-align: center;">
+                        <img src="{% static 'pics/PicsArt_06-06-11.21.28.png' %}" alt="connect" style="max-height:300px;" >   
+                    </div>
+                     
+                    
+
+                </span>
+</div>
+
+{% endblock content %}

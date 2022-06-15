@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
+    <title>Social Network</title>
+
+</head>
+
+
+<body onload="check()">
+    <div style="width:100%; ;position: fixed;z-index: 1; height: 3.1cm;">
+    
+    <section id="Mytop" style="height: 3cm;">
+            {% load static %}
+           <img src="{% static 'pics/logo.png' %}" width="200" height="100" style="position: relative; left:11.5cm">
+    </section>
+    <div class="block" style="display: inline-block; ">
+        <a href="{% url 'Mymedia:profile_list' %} ">
+            <img src="{% static 'pics/conference-48.png' %}" height="25" width="25" style="margin: auto; position: relative; bottom: 0.8cm; left:0.46cm" alt="">                
+        </a>
+    </div>
+
+    <div class="block" style="display: inline-block;">
+        <a href="{% url 'Mymedia:Myprofile' request.user.profile.id %} ">
+            <img src="{% static 'pics/icons8-account-48.png' %}" height="26" width="27" style="margin: auto; position: relative;  bottom: 0.8cm; left:0.6cm" alt="">
+        </a>
+    </div>
+    <div class="block" style="display: inline-block;">
+        <a href="{% url 'Mymedia:dashboard' %}">
+            <img src="{% static 'pics/icons8-news-feed-64.png' %}" height="26" width="27" style="margin: auto; position: relative;  bottom: 0.73cm; left:0.7cm" alt="">
+        </a>
+    </div>
+
+    </div>
+    <div style="height: 3.5cm;"></div>
+    <div class="container">
+        <div class="columns">
+
+            {% block content %}
+
+            {% endblock content %}
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function check(){
+    let text = document.getElementById("ptext")
+    let img = document.getElementById("up")
+
+    if(text.value === "" && img.value === ""){
+        document.getElementById("post").disabled = true; 
+    }else document.getElementById("post").disabled = false; 
+    }
+
+    
+    i = 0
+    j = 0
+    let f = document.getElementById("list")
+    function list(x){
+        if(x===1) {
+            i++
+            if(i!==2 && j!==2){
+                f.innerHTML = '<div class="content" style=" position:relative; right:1.1cm;top:0.3cm\
+                             "><ul>{% for following in profile.follows.all %}<li>\
+                             <a href="{% url "Mymedia:profile" following.id %} ">\
+                             {{ following }}</a></li>{% endfor %}</ul></div>'
+                j = 0              
+            }else{
+                f.innerHTML = ''
+                i = 0 ; j = 0
+            }
+        }else if(x===2) {
+            j++ 
+            if(i!==2 && j!==2){
+               f.innerHTML = '<div class="content" style="position:relative; right:1.1cm ;top:0.3cm"\
+                             ><ul>{% for follower in profile.followed_by.all %}<li>\
+                            <a href="{% url "Mymedia:profile" follower.id %} ">{{ follower }}\
+                            </a></li> {% endfor %}</ul></div>'
+                i = 0
+            }else{
+                f.innerHTML = ''
+                i = 0 ; j = 0
+            }
+        }
+    }
+
+
+</script>
+
+<style>
+    #up{
+        visibility: hidden;
+    }
+    #up_label{
+        position: relative;
+        right: 0cm;
+        bottom: 0.7cm;
+        left: 8.8cm;
+    }
+    #post{
+        position: relative;
+        left: 0cm;
+        bottom: 2.24cm;
+        height: 0.8cm;
+        width: 8.7cm;
+        border-radius: 0.4cm;
+
+    }
+    #Mytop{
+        background-color: rgb(21, 166, 250);
+        height: 7cm;
+    }
+</style>
+

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="column">
+
+    <div class="block">
+        <h1 class="title is-1">
+            <div style="display: inline-block;">
+            <figure class="image is-96x96">
+                <img src="{% static 'pics/brain2.png' %}">
+            </figure>
+            </div>
+            <div class="child" style="display: inline-block; position: relative; bottom: 0.2cm;">
+            {{profile.user.username|upper}}
+            <p class="subtitle is-small has-text-grey-light is-4">@{{ profile.user.username|lower }}</p>
+            </div>
+        </h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="buttons has-addons">
+        {% if profile in user.profile.follows.all %}
+            <button class="button is-info is-static">
+                Follow
+            </button>
+            <button class="button is-danger"
+                    name="follow"
+                    value="unfollow">
+                Unfollow
+            </button>
+        {% else %}
+            <button class="button is-info"
+                    name="follow"
+                    value="follow">
+                Follow
+            </button>
+            <button class="button is-danger is-static">
+                Unfollow
+            </button>
+        {% endif %}
+        </div>
+    </form>
+    </div>
+
+    <div class="content">
+        {% for post in profile.user.apost.all %}
+            <div class="box">
+                {{ post.body }}
+                <span class="is-small has-text-grey-light">
+                    ({{ post.created_at }})
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="content">
+    </div>
+
+</div>
+
+<div class="column is-one-third">
+
+    <div class="block" style="display: inline-block; margin-left: 1cm;position: relative;top:1cm">
+        <div class="content" onclick="list(1);" style="display: inline-block;">
+            <h1 style="margin:auto; margin-left: 0.67cm;">{{profile.follows.count}}</h3>
+            <b>Following</b>
+        </div>   
+           
+    </div>
+
+    <div class="block" style="display: inline-block; margin-left: 2cm;position: relative;top:1cm">
+        <div class="content" onclick="list(2);">
+            <h1 style="margin:auto; margin-left: 0.7cm;">{{profile.followed_by.count}}</h3>
+            <b>Followers</b>
+        </div>   
+          
+    </div>
+
+    <div id="list"style="display: inline-block; margin-left: 0cm; margin-bottom: 0.5cm ;"></div>
+    
+
+</div>
+
+{% endblock content %}

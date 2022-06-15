@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="column">
+
+    <div class="block">
+    <h1 class="title is-1">
+        <div style="display: inline-block;">
+        <figure class="image is-96x96">
+            <img src="{% static 'pics/brain2.png' %}">
+        </figure>
+        </div>
+        <div class="child" style="display: inline-block; position: relative; bottom: 0.2cm;">
+        {{profile.user.username|upper}}
+        <p class="subtitle is-small has-text-grey-light is-4">@{{ profile.user.username|lower }}</p>
+        </div>
+    </h1>
+    <br/>
+
+    
+    </div>
+
+    <div class="content">
+        {% for post in profile.user.apost.all reversed %}
+        {% if post.approved == True %}
+            <div class="box" style="height: 100%;">
+                <span class="is-small has-text-grey-light">
+                    ({{ post.created_at }})
+                </span>
+                <div style="word-break: break-all;">
+                {{ post.body }}
+                </div>
+                <div style="z-index: 9; margin: 40px; text-align: center;">
+                {% if post.img %}  
+                <img src="{{post.img.url}}" alt="connect" style="max-height:300px">   
+                {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
+
+<div class="column is-one-third">
+    
+    <div class="block" style="display: inline-block; margin-left: 1cm;position: relative;top:0.37cm">
+        <div class="content" onclick="list(1);" style="display: inline-block;">
+            <h1 style="margin:auto; margin-left: 0.67cm;">
+                {{profile.follows.count}}</h3>
+            <b>Following</b>
+        </div>   
+           
+    </div>
+
+    <div class="block" style="display: inline-block; margin-left: 2cm;position: relative;top:0.4cm">
+        <div class="content" onclick="list(2);">
+            <h1 style="margin:auto; margin-left: 0.7cm;">{{profile.followed_by.count}}</h3>
+            <b>Followers</b>
+        </div>   
+          
+    </div>
+
+<div id="list"style="display: inline-block; margin-left: 1cm; margin-bottom: 0.5cm"></div> 
+
+
+  
+
+    <div class="block">
+        <div class="block">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <label for="up" id="up_label" class="file-label" onmouseover ="check()" >                   
+                    <img src="{% static 'pics/Add_Image_icon-icons.com_54218.png' %}" height="40" width="40" alt="My image">
+                </label>
+                <button class="button is-link is-focused is-medium mt-5" id = "post" onmouseover ="check()"
+                        type="submit" name = post_thought>Post
+                </button>
+            </form>          
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
