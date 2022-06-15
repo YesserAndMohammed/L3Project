@@ -11,9 +11,6 @@ model = keras.models.load_model("./models/Best10.h5")
 
 with open("./models/dictionary.txt", "r") as f:
     word_index = eval(f.read())
-    
-    
-#reverse_word_index = dict([(value, key) for (key, value) in word_index.items()])
 
 
 

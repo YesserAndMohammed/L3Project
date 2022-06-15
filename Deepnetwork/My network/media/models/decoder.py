@@ -31,16 +31,7 @@ def review_encode(s):
 def clean(s):
     new_string = s.translate(str.maketrans('', '', string.punctuation))
     return new_string
-"""
-def getPrediction(s):
-    encode = clean(s)
-    encode = review_encode(s)
-    encode = keras.preprocessing.sequence.pad_sequences([encode], value=word_index["<PAD>"], padding="post", maxlen=250)
-    predict = model.predict(encode)
-    #print(type(predict[0][0]))
-    return predict[0][0]
 
-"""
 def getPrediction():
 
     with open("text.txt", encoding="utf-8") as f:
@@ -57,23 +48,3 @@ def getPrediction():
             return predict[0][0]
 getPrediction() 
 
-"""
-with open("posts.txt", "r") as f:
-    posts = eval(f.read())
-    
-with open("unacceptable.txt", "r") as f:
-    unaccept_posts = eval(f.read())
-
-
-for key in posts.keys():
-    if  getPrediction(posts[key]) > 0.7:
-        unaccept_posts[key] = 1
-    elif getPrediction(posts[key]) < 0.5:
-        unaccept_posts[key] = 3
-    else:
-        unaccept_posts[key] = 2
-
-
-with open("unacceptable.txt", 'w') as f:
-    f.write(json.dumps(f))
-"""
